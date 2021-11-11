@@ -20,12 +20,19 @@ async function run() {
         await client.connect();
         const database = client.db('united_property');
         const homeProductCollection = database.collection('homeProducts');
+        const allProductCollection = database.collection('allProducts');
 
         //GET HOME PRODUCTS
         app.get('/homeProducts', async (req, res) => {
             const cursor = homeProductCollection.find({});
             const homeProducts = await cursor.toArray();
             res.send(homeProducts)
+        })
+
+        app.get('/allProducts', async (req, res) => {
+            const cursor = allProductCollection.find({});
+            const allProducts = await cursor.toArray();
+            res.send(allProducts)
         })
     }
     finally {
