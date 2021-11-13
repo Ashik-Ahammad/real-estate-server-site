@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 require('dotenv').config();
+const ObjectId = require('mongodb').ObjectId;
 const port = process.env.PORT || 5000;
 const { MongoClient } = require('mongodb');
 
@@ -21,6 +22,11 @@ async function run() {
         const database = client.db('united_property');
         const homeProductCollection = database.collection('homeProducts');
         const allProductCollection = database.collection('allProducts');
+        const purchaseCollection = database.collection('purchaseList');
+        const reviewCollection = database.collection('reviews');
+
+
+
 
         //GET HOME PRODUCTS
         app.get('/homeProducts', async (req, res) => {
@@ -29,10 +35,47 @@ async function run() {
             res.send(homeProducts)
         })
 
+        //GET ALL PRODUCTS                              
         app.get('/allProducts', async (req, res) => {
             const cursor = allProductCollection.find({});
             const allProducts = await cursor.toArray();
             res.send(allProducts)
+        })
+
+        // GET PURCHASELIST
+        app.get('/purchaseList', async (req, res) => {
+            const cursor = purchaseCollection.find({});
+            const purchaseList = await cursor.toArray();
+            res.send(purchaseList);
+        })
+
+        // GET REVIEWS
+        app.get('/reviews', async (req, res) => {
+            const cursor = reviewCollection.find({});
+            const review = await cursor.toArray();
+            res.send(review);
+        })
+
+
+
+
+        //POST PURCHASE
+        app.post('./purchaseList', async (req, res) => {
+            const purchase = req.body;
+            console.log('Purchase post hitted', purchase);
+            const result = await purchaseCollection.insertOne(purchase);
+            console.log(result);
+            res.json(result);
+        })
+
+
+        // POST REVIEW
+        app.post('./reviews', async (req, res) => {
+            const review = req.body;
+            console.log('Review hitt', review);
+            const result = await reviewCollection.insertOne(review);
+            console.log(result);
+            res.json(result);
         })
     }
     finally {
@@ -48,7 +91,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('Hello up!')
+    res.send('Hello unp!')
 })
 
 app.listen(port, () => {
