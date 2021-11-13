@@ -62,7 +62,6 @@ async function run() {
 
 
 
-
         //POST PURCHASE
         app.post('/purchaseList', async (req, res) => {
             const purchase = req.body;
@@ -78,6 +77,15 @@ async function run() {
             const review = req.body;
             console.log('Review hitted', review);
             const result = await reviewCollection.insertOne(review);
+            console.log(result);
+            res.json(result);
+        })
+
+        // POST ALL TO PRODUCTS
+        app.post('/allProducts', async (req, res) => {
+            const allProduct = req.body;
+            console.log('All P hitted', allProduct);
+            const result = await allProductCollection.insertOne(allProduct);
             console.log(result);
             res.json(result);
         })
