@@ -49,12 +49,16 @@ async function run() {
             res.send(purchaseList);
         })
 
+
+
+
         // GET REVIEWS
         app.get('/reviews', async (req, res) => {
             const cursor = reviewCollection.find({});
             const review = await cursor.toArray();
             res.send(review);
         })
+
 
 
 
@@ -72,7 +76,7 @@ async function run() {
         // POST REVIEW
         app.post('/reviews', async (req, res) => {
             const review = req.body;
-            console.log('Review hitt', review);
+            console.log('Review hitted', review);
             const result = await reviewCollection.insertOne(review);
             console.log(result);
             res.json(result);
