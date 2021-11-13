@@ -60,7 +60,7 @@ async function run() {
 
 
         //POST PURCHASE
-        app.post('./purchaseList', async (req, res) => {
+        app.post('/purchaseList', async (req, res) => {
             const purchase = req.body;
             console.log('Purchase post hitted', purchase);
             const result = await purchaseCollection.insertOne(purchase);
@@ -70,7 +70,7 @@ async function run() {
 
 
         // POST REVIEW
-        app.post('./reviews', async (req, res) => {
+        app.post('/reviews', async (req, res) => {
             const review = req.body;
             console.log('Review hitt', review);
             const result = await reviewCollection.insertOne(review);
