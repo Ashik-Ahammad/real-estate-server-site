@@ -80,6 +80,15 @@ async function run() {
             res.json(result);
         })
 
+        app.put('./users', async (req, res) => {
+            const user = req.body;
+            const filter = { email: user.email };
+            const options = { upsert: true };
+            const updateDoc = { $set: user };
+            const result = userCollection.updateOne(filter, updateDoc, options);
+            res.json(result);
+        })
+
 
         //POST PURCHASELIST
         app.post('/purchaseList', async (req, res) => {
