@@ -23,6 +23,7 @@ async function run() {
         const allProductCollection = database.collection('allProducts');
         const purchaseCollection = database.collection('purchaseList');
         const reviewCollection = database.collection('reviews');
+        const userCollection = database.collection('user');
 
 
 
@@ -41,6 +42,15 @@ async function run() {
             res.send(allProducts)
         })
 
+        // GET USERS
+        app.get('/users', async (req, res) => {
+            const cursor = userCollection.find({});
+            const users = await cursor.toArray();
+            res.send(users);
+        })
+
+
+
         // GET PURCHASELIST
         app.get('/purchaseList', async (req, res) => {
             const email = req.query.email;
@@ -52,7 +62,6 @@ async function run() {
 
 
 
-
         // GET REVIEWS
         app.get('/reviews', async (req, res) => {
             const cursor = reviewCollection.find({});
@@ -61,6 +70,15 @@ async function run() {
         })
 
 
+
+
+        //POST USERS
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            const result = await userCollection.insertOne(user);
+            console.log(result);
+            res.json(result);
+        })
 
 
         //POST PURCHASELIST
