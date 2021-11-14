@@ -89,6 +89,14 @@ async function run() {
             res.json(result);
         })
 
+        app.put('/user/admin', async (req, res) => {
+            const user = req.body;
+            const filter = { email: user.email };
+            const updateDoc = { $set: 'admin' };
+            const result = await userCollection.updateOne(filter, updateDoc);
+            res.json(result);
+        })
+
 
         //POST PURCHASELIST
         app.post('/purchaseList', async (req, res) => {
