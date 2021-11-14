@@ -43,7 +43,7 @@ async function run() {
         })
 
         // GET USERS
-        app.get('/users', async (req, res) => {
+        app.get('/user', async (req, res) => {
             const cursor = userCollection.find({});
             const users = await cursor.toArray();
             res.send(users);
@@ -73,14 +73,14 @@ async function run() {
 
 
         //POST USERS
-        app.post('/users', async (req, res) => {
+        app.post('/user', async (req, res) => {
             const user = req.body;
             const result = await userCollection.insertOne(user);
             console.log(result);
             res.json(result);
         })
 
-        app.put('/users', async (req, res) => {
+        app.put('/user', async (req, res) => {
             const user = req.body;
             const filter = { email: user.email };
             const options = { upsert: true };
