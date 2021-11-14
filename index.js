@@ -43,7 +43,9 @@ async function run() {
 
         // GET PURCHASELIST
         app.get('/purchaseList', async (req, res) => {
-            const cursor = purchaseCollection.find({});
+            const email = req.query;
+            const query = { email: email }
+            const cursor = purchaseCollection.find(query);
             const purchaseList = await cursor.toArray();
             res.send(purchaseList);
         })
@@ -90,8 +92,10 @@ async function run() {
         //await client.close();
     }
 }
-
 run().catch(console.dir);
+
+
+
 
 
 
