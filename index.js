@@ -62,7 +62,7 @@ async function run() {
 
 
 
-        //POST PURCHASE
+        //POST PURCHASELIST
         app.post('/purchaseList', async (req, res) => {
             const purchase = req.body;
             console.log('Purchase post hitted', purchase);
