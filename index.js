@@ -43,7 +43,7 @@ async function run() {
 
         // GET PURCHASELIST
         app.get('/purchaseList', async (req, res) => {
-            const email = req.query;
+            const email = req.query.email;
             const query = { email: email }
             const cursor = purchaseCollection.find(query);
             const purchaseList = await cursor.toArray();
