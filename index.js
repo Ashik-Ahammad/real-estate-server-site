@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 require('dotenv').config();
-const ObjectId = require('mongodb').ObjectId;
 const port = process.env.PORT || 5000;
 const { MongoClient } = require('mongodb');
 
@@ -44,7 +43,9 @@ async function run() {
 
         // GET PURCHASELIST
         app.get('/purchaseList', async (req, res) => {
-            const cursor = purchaseCollection.find({});
+            const email = req.query.email;
+            const query = { email: email }
+            const cursor = purchaseCollection.find(query);
             const purchaseList = await cursor.toArray();
             res.send(purchaseList);
         })
@@ -65,7 +66,6 @@ async function run() {
         //POST PURCHASELIST
         app.post('/purchaseList', async (req, res) => {
             const purchase = req.body;
-            console.log('Purchase post hitted', purchase);
             const result = await purchaseCollection.insertOne(purchase);
             console.log(result);
             res.json(result);
@@ -75,7 +75,6 @@ async function run() {
         // POST REVIEW
         app.post('/reviews', async (req, res) => {
             const review = req.body;
-            console.log('Review hitted', review);
             const result = await reviewCollection.insertOne(review);
             console.log(result);
             res.json(result);
@@ -84,7 +83,6 @@ async function run() {
         // POST ALL TO PRODUCTS
         app.post('/allProducts', async (req, res) => {
             const allProduct = req.body;
-            console.log('All P hitted', allProduct);
             const result = await allProductCollection.insertOne(allProduct);
             console.log(result);
             res.json(result);
@@ -94,11 +92,8 @@ async function run() {
         //await client.close();
     }
 }
+
 run().catch(console.dir);
-
-
-
-
 
 
 
