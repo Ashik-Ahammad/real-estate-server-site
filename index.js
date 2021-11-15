@@ -24,6 +24,7 @@ async function run() {
         const purchaseCollection = database.collection('purchaseList');
         const reviewCollection = database.collection('reviews');
         const userCollection = database.collection('user');
+        const feedbackCollection = database.collection('feedback');
 
 
 
@@ -47,6 +48,13 @@ async function run() {
             const cursor = userCollection.find({});
             const users = await cursor.toArray();
             res.send(users);
+        })
+
+        // GET feedback
+        app.get('/feedback', async (req, res) => {
+            const cursor = feedbackCollection.find({});
+            const feedbacks = await cursor.toArray();
+            res.send(feedbacks);
         })
 
 
@@ -114,6 +122,13 @@ async function run() {
         })
 
 
+        app.post('/feedback', async (req, res) => {
+            const feedback = req.body;
+            const result = await feedbackCollection.insertOne(feedback);
+            console.log(result);
+            res.json(result);
+        })
+
         //POST PURCHASELIST
         app.post('/purchaseList', async (req, res) => {
             const purchase = req.body;
@@ -138,6 +153,9 @@ async function run() {
             console.log(result);
             res.json(result);
         })
+
+
+
     }
     finally {
         //await client.close();
